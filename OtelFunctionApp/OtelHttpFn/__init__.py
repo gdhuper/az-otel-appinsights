@@ -1,5 +1,6 @@
 import logging
 import azure.functions as func
+from azure.monitor.opentelemetry.exporter import AzureMonitorTraceExporter
 
 def main(req: func.HttpRequest, que: func.Out[str]) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
