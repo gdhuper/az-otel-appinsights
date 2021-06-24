@@ -2,7 +2,7 @@
   "scriptFile": "__init__.py",
   "bindings": [
     {
-      "authLevel": "anonymous",
+      "authLevel": "Anonymous",
       "type": "httpTrigger",
       "direction": "in",
       "name": "req",
@@ -15,6 +15,13 @@
       "type": "http",
       "direction": "out",
       "name": "$return"
+    },
+    {
+      "type": "queue",
+      "direction": "out",
+      "name": "que",
+      "queueName": "otel-queue",
+      "connection": "AzureWebJobsStorage"
     }
   ]
 }
