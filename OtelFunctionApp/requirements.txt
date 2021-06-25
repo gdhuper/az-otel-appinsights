@@ -2,3 +2,6 @@
 
 azure-functions
 azure-monitor-opentelemetry-exporter
+azure-storage-queue
+azure-core-tracing-opentelemetry
+
