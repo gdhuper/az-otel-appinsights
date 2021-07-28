@@ -15,13 +15,6 @@
       "type": "http",
       "direction": "out",
       "name": "$return"
-    },
-    {
-      "type": "queue",
-      "direction": "out",
-      "name": "que",
-      "queueName": "otel-queue",
-      "connection": "AzureWebJobsStorage"
     }
   ]
 }

@@ -3,24 +3,20 @@ import azure.functions as func
 from opentelemetry import trace
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
-from azure.monitor.opentelemetry.exporter import AzureMonitorTraceExporter
 
 # Declare OpenTelemetry as enabled tracing plugin for Azure SDKs
 from azure.core.settings import settings
 from azure.core.tracing.ext.opentelemetry_span import OpenTelemetrySpan
 
 from azure.storage.queue import QueueClient
+from ..OtelLib.otel_lib import get_otel_client
 
 settings.tracing_implementation = OpenTelemetrySpan
 
 
-exporter = AzureMonitorTraceExporter.from_connection_string(
-    conn_str=os.environ["APPLICATIONINSIGHTS_CONNECTION_STRING"]
-)
-
 trace.set_tracer_provider(TracerProvider())
 tracer = trace.get_tracer(__name__)
-span_processor = BatchSpanProcessor(exporter)
+span_processor = BatchSpanProcessor(get_otel_client())
 trace.get_tracer_provider().add_span_processor(span_processor)
 
 
@@ -48,7 +44,7 @@ def peek_queue(queue_client):
     for peeked_message in messages:
         print("Peeked message: " + peeked_message.content)
 
-def main(req: func.HttpRequest, que: func.Out[str]) -> func.HttpResponse:
+def main(req: func.HttpRequest) -> func.HttpResponse:
     with tracer.start_as_current_span("OtelHttpfn"):
         #logging.info("Python HTTP trigger function processed a request.")
         print("Python HTTP trigger function received a request")
